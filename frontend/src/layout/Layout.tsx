@@ -1,6 +1,6 @@
 import React from "react"
 import Header from "../components/Header"
-import Hero from "../components/Hero"
+
 import Footer from "../components/Footer"
 
 interface Props{
@@ -8,10 +8,10 @@ interface Props{
 }
 const Layout = ({children}: Props) => {
   return (
-    <div className='flex flex-col min-h-screen'>
+    <div className='flex flex-col min-h-screen bg-black text-white'>
       <Header/>
-      <Hero/>
-      <div className="container mx-auto py-10 flex-1">{children}</div>
+
+      <div className=" mx-auto py-10 flex-1">{children}</div>
       <Footer/>
 
     </div>

@@ -6,6 +6,7 @@ import {
 
 } from "react-router-dom"
 import Layout from './layout/Layout'
+import Home from './pages/Home'
 function App() {
 
 
@@ -14,7 +15,7 @@ function App() {
       <Routes>
         <Route path='/' element={
           <Layout>
-            <p>Home page</p>
+            <Home/>
           </Layout>
         } />
 
