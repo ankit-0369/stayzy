@@ -19,7 +19,10 @@ const registerUser = async (req: Request, res: Response) => {
         })
 
         if (user) {
-            throw new ApiError(409, 'User with this email already exist')
+            // throw new ApiError(409, 'User with this email already exist')
+            return res.status(409).json(
+                new ApiResponse(409, 'user with this email already exist',{})
+            ) 
 
         }
 

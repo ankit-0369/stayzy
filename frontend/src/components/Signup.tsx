@@ -8,14 +8,40 @@ import {
   IconBrandGoogle,
 } from "@tabler/icons-react";
 import { Link } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { useMutation } from "react-query";
+import * as apiClient from '../Api-clients'
 
-
+export type FormData= {
+  firstName: string,
+  lastName: string,
+  email: string,
+  password: string,
+  confirmPassword: string
+}
 
 export function SignUp() {
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log("Form submitted");
-  };
+
+  const { register,
+    watch,
+    handleSubmit,
+    formState: { errors }
+  } = useForm<FormData>()
+
+  const mutation= useMutation(apiClient.register, {
+      onSuccess: ()=>{
+        console.log("user successfully registered")
+      },
+
+      onError: (errors:Error)=>{
+        console.log(errors.message);
+      }
+  })
+  const onSubmit = handleSubmit((data) =>{
+    console.log(data)
+    mutation.mutate(data)
+    return
+  })
   return (
     <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white dark:bg-black">
       <h2 className="font-bold text-xl text-neutral-800 dark:text-neutral-200">
@@ -25,28 +51,91 @@ export function SignUp() {
         Experience luxury and comfort with us. Sign up to book your dream stay! 🏨✨
       </p>
 
-      <form className="my-8" onSubmit={handleSubmit}>
+      <form className="my-8" onSubmit={onSubmit}>
         <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mb-4">
           <LabelInputContainer>
-            <Label htmlFor="firstname">First name</Label>
-            <Input id="firstname" placeholder="John" type="text" />
+            <Label htmlFor="firstName">First name</Label>
+            <Input
+              id="firstName"
+              placeholder="Jay"
+              type="text"
+              {...register("firstName", { required: "this field is required" })}
+            />
+                {errors.firstName && <p className="text-red-500">{errors.firstName.message}</p>}
           </LabelInputContainer>
+
           <LabelInputContainer>
-            <Label htmlFor="lastname">Last name</Label>
-            <Input id="lastname" placeholder="Doe" type="text" />
+            <Label htmlFor="lastName">Last name</Label>
+            <Input
+              id="lastName"
+              placeholder="Viru"
+              type="text"
+              {...register("lastName", { required: "this field is required" })}
+            />
+                {errors.lastName && <p className="text-red-500">{errors.lastName.message}</p>}
           </LabelInputContainer>
+
         </div>
         <LabelInputContainer className="mb-4">
           <Label htmlFor="email">Email Address</Label>
-          <Input id="email" placeholder="you@example.com" type="email" />
+          <Input
+            id="email"
+            placeholder="you@example.com"
+            type="email"
+            {...register("email", {
+              required: "email is required",
+              pattern: {
+                value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+                message: "Email is not in correct format"
+              }
+            })}
+          />
+
+          {errors.email && <p className="text-red-500">{errors.email.message}</p>}
         </LabelInputContainer>
+
         <LabelInputContainer className="mb-4">
           <Label htmlFor="password">Password</Label>
-          <Input id="password" placeholder="••••••••" type="password" />
+          <Input
+            id="password"
+            placeholder="••••••••"
+            type="password"
+            {...register("password", {
+              required: "Password is required",
+              validate: {
+                minLength: value => value.length >= 6 || "Password must be at least 6 characters long.",
+                hasUpperCase: value => /[A-Z]/.test(value) || "Password must have an uppercase character",
+                hasNumber: value => /[0-9]/.test(value) || "password must contains an intger."
+              }
+            })}
+          />
+
+          {errors.password && <p className="text-red-500">{errors.password.message}</p>}
+        </LabelInputContainer>
+
+        <LabelInputContainer className="mb-4">
+          <Label htmlFor="confirmPassword">Confirm Password</Label>
+          <Input
+            id="confirmPassword"
+            placeholder="••••••••"
+            type="password"
+            {...register("confirmPassword", {
+              required: "kya kr rha bhai dobara password to daal",
+              validate: (val) => {
+                if (!val) return "kya kr rha bhai dobara password to daal";
+                else if (watch("password") !== val) return "bhai dono passwords match nhi ho rhe🤨"
+
+              }
+            })}
+          />
+
+          {errors.confirmPassword && (
+            <span className="text-red-500">{errors.confirmPassword.message}</span>
+          )}
         </LabelInputContainer>
 
         <p className="text-neutral-600 text-sm max-w-sm mt-2 mb-2 dark:text-neutral-300">
-          Already have an account? 
+          Already have an account?
           <span>
             <Link to={'/sign-in'} className="text-cyan-600"> Log in now</Link> 🔑
           </span>
