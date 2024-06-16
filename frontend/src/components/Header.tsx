@@ -1,21 +1,25 @@
 import { Link } from "react-router-dom"
+import { Button } from "./Button"
 
 
 const Header = () => {
   return (
-    <div className='bg-blue-800 py-6'>
-      <div className="container mx-auto flex justify-between">
+    <div className='bg-[#111111] py-4 border-b-zinc-800 border-b fixed  top-0 right-0 z-50 w-full '>
+      <div className="px-10 mx-auto flex justify-between  ">
+
+      <div>
       <span className="text-3xl text-white font-bold tracking-wide">
           <Link to="/">StayZy</Link>
         </span>
-        <span className="flex space-x-2">
-        <Link
-              to="/sign-in"
-              className="flex bg-white items-center text-blue-600 px-3 font-bold hover:bg-gray-100"
-            >
-              Sign In
-            </Link>
-        </span>
+      </div>
+      <div className="flex gap-2 items-center justify-center">
+        <Button
+          label="Sign In"
+          href="/sign-in"
+        />
+
+        <Button label="Sign Up" href="/sign-up"/>
+      </div>
       </div>
     </div>
   )

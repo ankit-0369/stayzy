@@ -4,6 +4,7 @@ import { ApiError } from "../utils/ApiError"
 import { User } from "../models/user.model"
 import jwt from "jsonwebtoken"
 import { ApiResponse } from "../utils/apiResponse"
+import bcrypt from 'bcryptjs'
 const registerUser = async (req: Request, res: Response) => {
    
     try {
@@ -39,7 +40,7 @@ const registerUser = async (req: Request, res: Response) => {
 
         res
             .status(200)
-            .cookie("auth_token", token, options)
+            .cookie("auth_token_register", token, options)
             .json(new
                 ApiResponse(201,
                     'user created successfully',
@@ -68,7 +69,53 @@ const registerUser = async (req: Request, res: Response) => {
 }
 
 const loginUser= async (req : Request, res: Response) => {
-    const {email, password}= req.body;
+    try {
+        const {email, password}= req.body;
+        console.log(email, password)
+        if(!email || !password)
+        {
+            throw new ApiError(401, "Email and Password are required");
+            
+        }
+
+        const user= await User.findOne({email})
+        if(!user){
+            return res.status(400).json(
+                new ApiResponse(400, 'Invalid Credentials', [])
+                // new ApiError(401, "Invalid Credentials given!")
+            )
+        }
+
+        const isMatch= await bcrypt.compare(password, user.password)
+        if(!isMatch)
+            return res.status(400).json(
+                new ApiResponse(400, 'Invalid Credentials', []))
+
+        const token= jwt.sign(
+            {userId: user._id},
+            process.env.JWT_SECRET_KEY as string,
+            {expiresIn: "1d"}
+        )
+
+        res.cookie("auth_token", token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            maxAge: 86400000
+        })
+        .status(200)
+        .json(
+            new ApiResponse(200, 'User Signed In successfully', {userId: user._id})
+        )
+        
+
+
+
+    } catch (error) {
+        console.log(error)
+        res.status(500).json(
+            new ApiResponse(500, 'Internal server Error', error)
+        )
+    }
     
 }
 

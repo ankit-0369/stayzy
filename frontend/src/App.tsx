@@ -8,6 +8,8 @@ import {
 import Layout from './layout/Layout'
 import Home from './pages/Home'
 import SignupPage from './pages/SignupPage'
+import SignInPage from './pages/SignInPage'
+
 function App() {
 
 
@@ -16,12 +18,18 @@ function App() {
       <Routes>
         <Route path='/' element={
           <Layout>
-            <Home/>
+            <Home />
           </Layout>
         } />
-        <Route path='/signup' element= {
+        <Route path='/sign-up' element={
           <Layout>
-            <SignupPage/>
+            <SignupPage />
+          </Layout>
+        } />
+
+        <Route path='/sign-in' element={
+          <Layout>
+            <SignInPage />
           </Layout>
         } />
 
