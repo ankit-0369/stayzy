@@ -1,9 +1,9 @@
 import { FormData } from "./components/Signup";
 
-// const API_BASE_URL= import.meta.env.API_BASE_URL || ""
+const API_BASE_URL= import.meta.env.VITE_API_BASE_URL || ""
 export const register= async (registerData:FormData)=>{
-
-    const response= await fetch(`http://localhost:8080/api/users/register`,{
+    console.log(API_BASE_URL);
+    const response= await fetch(`${API_BASE_URL}/api/users/register`,{
         method: "POST",
         headers: {
             "Content-type": "application/json"
@@ -11,7 +11,7 @@ export const register= async (registerData:FormData)=>{
         body: JSON.stringify(registerData)
     })
     const responseBody= await response.json()
-    if(!response.ok) throw new Error(`${responseBody.message} and custom message`)
+    if(!response.ok) throw new Error(`${responseBody.message}`)
         return responseBody;
 
 }

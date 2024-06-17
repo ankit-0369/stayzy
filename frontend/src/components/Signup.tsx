@@ -7,10 +7,11 @@ import {
   IconBrandGithub,
   IconBrandGoogle,
 } from "@tabler/icons-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useMutation } from "react-query";
 import * as apiClient from '../Api-clients'
+import { useAppContext } from "../contexts/AppContext";
 
 export type FormData= {
   firstName: string,
@@ -28,13 +29,25 @@ export function SignUp() {
     formState: { errors }
   } = useForm<FormData>()
 
+  const appContext= useAppContext()
+  const navigate= useNavigate()
   const mutation= useMutation(apiClient.register, {
       onSuccess: ()=>{
         console.log("user successfully registered")
+        appContext.showToast({
+          message: "registered successfully",
+          tpye: "SUCCESS"
+        })
+
+        navigate('/')
       },
 
       onError: (errors:Error)=>{
         console.log(errors.message);
+        appContext.showToast({
+          tpye: "ERROR",
+          message: errors.message
+        })
       }
   })
   const onSubmit = handleSubmit((data) =>{
