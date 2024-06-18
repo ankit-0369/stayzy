@@ -43,7 +43,7 @@ const registerUser = async (req: Request, res: Response) => {
 
         res
             .status(200)
-            .cookie("auth_token_register", token, options)
+            .cookie("auth_token", token, options)
             .json(new
                 ApiResponse(201,
                     'user created successfully',
@@ -83,8 +83,8 @@ const loginUser= async (req : Request, res: Response) => {
 
         const user= await User.findOne({email})
         if(!user){
-            return res.status(400).json(
-                new ApiResponse(400, 'Invalid Credentials', [])
+            return res.status(409).json(
+                new ApiResponse(409, 'Invalid Credentials with email', [])
                 // new ApiError(401, "Invalid Credentials given!")
             )
         }

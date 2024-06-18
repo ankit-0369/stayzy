@@ -8,12 +8,49 @@ import {
   IconBrandGoogle,
 } from "@tabler/icons-react";
 import { Link } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { useMutation, useQueryClient } from "react-query";
+import * as apiClient from '../Api-clients'
+import { useAppContext } from "../contexts/AppContext";
+
+export type SignInFormData= {
+  email: string,
+  password: string
+}
 
 export function SignIn() {
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log("Form submitted");
-  };
+  const query= useQueryClient()
+  const appContext= useAppContext()
+  const mutation= useMutation(apiClient.signIn, {
+
+    onSuccess: () =>{
+        console.log("logged in successfully")
+        appContext.showToast({
+          message: "user logged in successfully",
+          tpye: "SUCCESS"
+        })
+
+        query.invalidateQueries("validateToken");
+    },
+
+    onError: (error:Error) =>{
+        appContext.showToast({
+          message: error.message,
+          tpye: "ERROR"
+        })
+    }
+
+  })
+
+  const { register,
+     handleSubmit,
+    formState: {errors}
+    } = useForm<SignInFormData>()
+
+  const onSubmit = handleSubmit((data)=>{
+      console.log(data);
+      mutation.mutate(data)
+  })
 
   return (
     <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white dark:bg-black">
@@ -21,32 +58,60 @@ export function SignIn() {
         Welcome Back to StayZy 🤗
       </h2>
       <p className="text-neutral-600 text-sm max-w-sm mt-2 dark:text-neutral-300">
-      Sign in to book your stay and enjoy our services! 🏨✨
+        Sign in to book your stay and enjoy our services! 🏨✨
       </p>
 
-      <form className="my-8" onSubmit={handleSubmit}>
+      <form className="my-8" onSubmit={onSubmit}>
         <LabelInputContainer className="mb-4">
           <Label htmlFor="email">Email Address</Label>
-          <Input id="email" placeholder="yourname@example.com" type="email" />
+          <Input
+            id="email"
+            placeholder="yourname@example.com"
+            type="email"
+            {...register("email",
+              {
+                required: "Email is required",
+                pattern: {
+                  value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+                  message: "Invalid Email Address"
+                }
+
+              }
+            )}
+          />
+          {errors.email && <p className="text-red-500">{errors.email.message}</p>}
         </LabelInputContainer>
         <LabelInputContainer className="mb-8">
           <Label htmlFor="password">Password </Label>
-          <Input id="password" placeholder="••••••••" type="password" />
+          <Input
+            id="password"
+            placeholder="••••••••"
+            type="password"
+            {...register("password", {
+              required: "password to daal le bhai🤨",
+              validate: {
+                minLength: value => value.length >= 6 || "Password must be at least 6 characters long.",
+                hasUpperCase: value => /[A-Z]/.test(value) || "Password must have an uppercase character",
+                hasNumber: value => /[0-9]/.test(value) || "password must contains an intger."
+              }
+            })}
+          />
+          {errors.password && <p className="text-red-500">{errors.password.message}</p>}
         </LabelInputContainer>
 
         <p className="text-neutral-600 text-sm max-w-sm mt-2 mb-2 dark:text-neutral-300">
-        Don't have any account ?  
-       <span> <Link 
-        to={'/sign-up'}
-        className="text-cyan-600"
-        >Register Now 🚀</Link></span>
-      </p>
+          Don't have any account ?
+          <span> <Link
+            to={'/sign-up'}
+            className="text-cyan-600"
+          >Register Now 🚀</Link></span>
+        </p>
 
         <button
           className="bg-gradient-to-br relative group/btn from-black dark:from-zinc-900 dark:to-zinc-900 to-neutral-600 block dark:bg-zinc-800 w-full text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"
           type="submit"
         >
-            Sign In &rarr; ✨
+          Sign In &rarr; ✨
           <BottomGradient />
         </button>
 
@@ -69,7 +134,7 @@ export function SignIn() {
           >
             <IconBrandGoogle className="h-4 w-4 text-neutral-800 dark:text-neutral-300" />
             <span className="text-neutral-700 dark:text-neutral-300 text-sm">
-            Sign in with Google 🌐
+              Sign in with Google 🌐
             </span>
             <BottomGradient />
           </button>

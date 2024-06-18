@@ -41,7 +41,7 @@ export function SignUp() {
 
         navigate('/')
       },
-
+      
       onError: (errors:Error)=>{
         console.log(errors.message);
         appContext.showToast({
@@ -55,6 +55,13 @@ export function SignUp() {
     mutation.mutate(data)
     return
   })
+  
+  if(mutation.isLoading) return
+   <div className="text-center flex items-center justify-center
+   text-2xl text-white h-screen w-full
+   ">Loading...</div>
+   
+
   return (
     <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white dark:bg-black">
       <h2 className="font-bold text-xl text-neutral-800 dark:text-neutral-200">
