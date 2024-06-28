@@ -9,10 +9,14 @@ import Layout from './layout/Layout'
 import Home from './pages/Home'
 import SignupPage from './pages/SignupPage'
 import SignInPage from './pages/SignInPage'
+import { useAppContext } from './contexts/AppContext'
 
 function App() {
 
-
+  const {isLoading}= useAppContext()
+  if(isLoading) return (
+    <div className='text-center h-screen w-screen bg-opacity-90 text-white bg-black'>Loading App ...</div>
+  )
   return (
     <Router>
       <Routes>

@@ -9,7 +9,7 @@ import {
 } from "@tabler/icons-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import * as apiClient from '../Api-clients'
 import { useAppContext } from "../contexts/AppContext";
 
@@ -31,14 +31,15 @@ export function SignUp() {
 
   const appContext= useAppContext()
   const navigate= useNavigate()
+  const queryClient= useQueryClient()
   const mutation= useMutation(apiClient.register, {
-      onSuccess: ()=>{
+      onSuccess: async()=>{
         console.log("user successfully registered")
         appContext.showToast({
           message: "registered successfully",
           tpye: "SUCCESS"
         })
-
+        await queryClient.invalidateQueries("validateToken");
         navigate('/')
       },
       

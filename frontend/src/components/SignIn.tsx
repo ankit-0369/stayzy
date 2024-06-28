@@ -7,7 +7,7 @@ import {
   IconBrandGithub,
   IconBrandGoogle,
 } from "@tabler/icons-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
 import * as apiClient from '../Api-clients'
@@ -21,16 +21,18 @@ export type SignInFormData= {
 export function SignIn() {
   const query= useQueryClient()
   const appContext= useAppContext()
+  const navigate= useNavigate()
   const mutation= useMutation(apiClient.signIn, {
 
-    onSuccess: () =>{
+    onSuccess: async() =>{
         console.log("logged in successfully")
         appContext.showToast({
           message: "user logged in successfully",
           tpye: "SUCCESS"
         })
 
-        query.invalidateQueries("validateToken");
+        await query.invalidateQueries("validateToken");
+        navigate("/");
     },
 
     onError: (error:Error) =>{

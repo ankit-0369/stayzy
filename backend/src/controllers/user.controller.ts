@@ -1,6 +1,6 @@
 import { validationResult } from "express-validator"
 import { Request, Response } from 'express'
-import { ApiError } from "../utils/ApiError"
+import { ApiError } from "../utils/apiError"
 import { User } from "../models/user.model"
 import jwt from "jsonwebtoken"
 import { ApiResponse } from "../utils/apiResponse"

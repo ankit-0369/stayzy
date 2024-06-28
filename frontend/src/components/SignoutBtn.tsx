@@ -13,7 +13,7 @@ const SignoutBtn= () =>{
             console.log("Signed Out Successfully");
             await query.invalidateQueries("validateToken");
             showToast({tpye: "SUCCESS", message: "Signed Out Successfully, will wait for u🥹"})
-            navigate('/')
+            navigate('/sign-in')
         },
         onError: (errors:Error)=> {
             console.log("Error in mutation", errors.message)
