@@ -11,7 +11,7 @@
     "e2e": "cross-env DOTENV_CONFIG_PATH=.env.e2e nodemon"
   },
   "engines": {
-  "node": ">=20.14.2 <21.0.0"
+  "node": ">=20.11.1 <21.0.0"
 },
   "author": "kalki",
   "license": "ISC",
