@@ -1,7 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 
 export type HotelType = {
-
+    _id: string;
     userId: string;
     name: string;
     city: string;

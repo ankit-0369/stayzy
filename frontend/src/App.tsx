@@ -11,13 +11,14 @@ import SignupPage from './pages/SignupPage'
 import SignInPage from './pages/SignInPage'
 import { useAppContext } from './contexts/AppContext'
 import AddHotel from './pages/AddHotel'
+import MyHotels from './pages/MyHotels'
 
 
 function App() {
 
-  const {isLoggedIn, isLoading}= useAppContext()
-  
-  if(isLoading) return (<div className='w-screen h-screen flex justify-center items-center bg-black text-white'>
+  const { isLoggedIn, isLoading } = useAppContext()
+
+  if (isLoading) return (<div className='w-screen h-screen flex justify-center items-center bg-black text-white'>
     <h1>Loading...</h1>
   </div>)
   return (
@@ -41,14 +42,27 @@ function App() {
         } />
 
         {
-          isLoggedIn && <Route 
-          path='/add-hotels'
-          element= {<Layout>
-            <AddHotel/>
-          </Layout>}
-         
-          />
+          isLoggedIn && (
+            <>
+              <Route
+                path='/add-hotels'
+                element={<Layout>
+                  <AddHotel />
+                </Layout>}
+
+              />
+              <Route
+                path='/my-hotels'
+                element={<Layout>
+                  <MyHotels />
+                </Layout>}
+
+              />
+            </>
+          )
         }
+
+
         <Route path='/search' element={
           <Layout>
             <p>Search page</p>

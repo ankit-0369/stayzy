@@ -1,5 +1,5 @@
 import express from "express";
-import { addNewHotel } from "../controllers/hotel.controller";
+import { addNewHotel, getAllHotels } from "../controllers/hotel.controller";
 import { verifyToken } from "../middlewares/auth.middleware";
 import { addNewHotelValidation } from "../middlewares/validation.middleware";
 import upload from "../middlewares/multer.middleware";
@@ -12,6 +12,8 @@ router.post('/', verifyToken,
     addNewHotelValidation,
     upload.array("imageFiles", 6),
     addNewHotel)
+
+router.get('/', verifyToken, getAllHotels);
 
 export default router;
 

@@ -43,6 +43,27 @@ const addNewHotel= async(req: Request, res: Response)=>{
     }
 }
 
+
+const getAllHotels= async(req: Request, res: Response)=>{
+    console.log("called")
+    try {
+        const allHotels= await Hotel.find({userId: req.userId})
+        console.log(allHotels)
+        // res.status(200).json(
+        //     new ApiResponse(200, 'Hotel fetched successfully!', {
+        //         hotels: allHotels
+        //     })
+        // )
+        res.json(allHotels)
+    } catch (error) {
+        
+        res.status(500).json(
+            new ApiResponse(500, 'Internal server Error', {error: error})
+        )
+    }
+}
+
 export {
-    addNewHotel
+    addNewHotel,
+    getAllHotels
 }
