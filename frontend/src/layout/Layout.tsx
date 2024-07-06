@@ -8,9 +8,8 @@ interface Props{
 }
 const Layout = ({children}: Props) => {
   return (
-    <div className='flex flex-col min-h-screen bg-black text-white'>
+    <div className='flex flex-col min-h-screen  text-white'>
       <Header/>
-
       <div className=" mx-auto py-10 flex-1">{children}</div>
       <Footer/>
 

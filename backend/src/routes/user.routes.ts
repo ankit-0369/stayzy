@@ -16,3 +16,12 @@ router.post('/login',
 )
 
 export default router
+
+/*
+ 1. SendOtp route.
+ 2. verifyOTP route.
+ 3. Update Profile Details.
+ 4. getProfile Details.
+ 5. Delete profile.
+
+*/

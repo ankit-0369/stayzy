@@ -20,3 +20,8 @@ export {
     validateToken,
     logOut
 }
+
+/*
+    1. validate Email with otp 
+    2. otp send feature
+*/

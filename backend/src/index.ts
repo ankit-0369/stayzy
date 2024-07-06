@@ -4,6 +4,7 @@ import 'dotenv/config'
 import connectionDB from './db/index'
 import userRoutes from './routes/user.routes'
 import authRoutes from './routes/auth.routes'
+import myHotelRoutes from './routes/my-hotel.routes'
 import cookieParser from 'cookie-parser'
 import path from 'path'
 
@@ -20,6 +21,11 @@ app.use(cookieParser());
 app.use(express.urlencoded({extended: true}))
 app.use('/api/users', userRoutes)
 app.use('/api/auth', authRoutes)
+app.use('/api/my-hotels', myHotelRoutes)
+app.get("*", (req: Request, res: Response) => {
+    res.sendFile(path.join(__dirname, "../../frontend/dist/index.html"));
+  });
+  
 
 app.get('/', (req, res)=>{
     

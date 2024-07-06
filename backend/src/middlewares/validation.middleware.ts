@@ -1,4 +1,4 @@
-import { check, validationResult } from "express-validator";
+import { body, check, validationResult } from "express-validator";
 import { ApiResponse } from "../utils/apiResponse";
 import {NextFunction, Request, Response} from 'express'
 const registerValidation=  [
@@ -17,6 +17,23 @@ const loginValidation= [
     }).escape()
 ]
 
+const addNewHotelValidation= [
+    body("name").notEmpty().withMessage("name is required"),
+    body("city").notEmpty().withMessage("City is required"),
+    body("country").notEmpty().withMessage("Country is required"),
+    body("description").notEmpty().withMessage("Description is required"),
+    body("type").notEmpty().withMessage("Hotel type is required"),
+    body("pricePerNight")
+      .notEmpty()
+      .isNumeric()
+      .withMessage("Price per night is required and must be a number"),
+    body("facilities")
+      .notEmpty()
+      .isArray()
+      .withMessage("Facilities are required"),
+
+
+]
 const handleValidationError= (req: Request, res : Response, next: NextFunction)=>{
     const error = validationResult(req)
     if (!error.isEmpty())
@@ -35,5 +52,6 @@ const handleValidationError= (req: Request, res : Response, next: NextFunction)=
 export {
     registerValidation,
     loginValidation,
-    handleValidationError
+    handleValidationError,
+    addNewHotelValidation
 }

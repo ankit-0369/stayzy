@@ -13,7 +13,7 @@ import { useMutation, useQueryClient } from "react-query";
 import * as apiClient from '../Api-clients'
 import { useAppContext } from "../contexts/AppContext";
 
-export type FormData= {
+export type SignupFormData= {
   firstName: string,
   lastName: string,
   email: string,
@@ -27,7 +27,7 @@ export function SignUp() {
     watch,
     handleSubmit,
     formState: { errors }
-  } = useForm<FormData>()
+  } = useForm<SignupFormData>()
 
   const appContext= useAppContext()
   const navigate= useNavigate()

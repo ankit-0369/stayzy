@@ -6,9 +6,9 @@ import SignoutBtn from "./SignoutBtn"
 
 const Header = () => {
 
-  const { isLoggedIn, isLoading } = useAppContext()
+  const { isLoggedIn } = useAppContext()
 
-  if(isLoading) return <div>Loading...</div>
+
   return (
     <div className='bg-[#111111] py-4 border-b-zinc-800 border-b fixed  top-0 right-0 z-50 w-full '>
       <div className="px-10 mx-auto flex justify-between  ">
@@ -24,6 +24,8 @@ const Header = () => {
             <>
             <Button label="My Bookings" href="/my-bookings" />
             <Button label="My Hotels" href="/my-hotels" />
+            <Button label="Add Hotels" href="/add-hotels" />
+
             <SignoutBtn />
             </> : <>
               <Button

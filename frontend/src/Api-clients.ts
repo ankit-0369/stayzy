@@ -1,8 +1,9 @@
+// import { HotelFormData } from "./components/forms/ManageHotelsForms/ManageHotelForm";
 import { SignInFormData } from "./components/SignIn";
-import { FormData } from "./components/Signup";
+import { SignupFormData } from "./components/Signup";
 
 const API_BASE_URL= import.meta.env.VITE_API_BASE_URL || ""
-export const register= async (registerData:FormData)=>{
+export const register= async (registerData:SignupFormData)=>{
     console.log(API_BASE_URL);
     const response= await fetch(`${API_BASE_URL}/api/users/register`,{
         method: "POST",
@@ -63,4 +64,17 @@ export const signOut= async()=>{
         throw new Error("Error in signout")
 
 
+}
+
+export const addHotel = async(hotelFormData : FormData)=>{
+    const response= await fetch(`${API_BASE_URL}/api/my-hotels/`, {
+        credentials: "include",
+        method: "POST",
+        body: hotelFormData
+    })
+
+    if(!response.ok)
+        throw new Error("Error while adding new Hotel")
+
+    return response.json();
 }

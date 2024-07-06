@@ -84,7 +84,7 @@ const loginUser= async (req : Request, res: Response) => {
         const user= await User.findOne({email})
         if(!user){
             return res.status(409).json(
-                new ApiResponse(409, 'Invalid Credentials with email', [])
+                new ApiResponse(409, 'Invalid Credentials with email', {})
                 // new ApiError(401, "Invalid Credentials given!")
             )
         }
@@ -92,7 +92,7 @@ const loginUser= async (req : Request, res: Response) => {
         const isMatch= await bcrypt.compare(password, user.password)
         if(!isMatch)
             return res.status(400).json(
-                new ApiResponse(400, 'Invalid Credentials', []))
+                new ApiResponse(400, 'Invalid Credentials', {}))
 
         const token= jwt.sign(
             {userId: user._id},
@@ -126,3 +126,12 @@ export {
     registerUser,
     loginUser
 }
+
+
+/*
+  1. GetUser route
+  2. change password
+  4. change details
+  5. take details from the user
+  6. 
+*/
