@@ -1,4 +1,4 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose from "mongoose";
 
 export type HotelType = {
     _id: string;
@@ -18,7 +18,7 @@ export type HotelType = {
 
 }
 
-const hotelSchema = new Schema<HotelType>({
+const hotelSchema = new mongoose.Schema<HotelType>({
 
     userId: {
         type: String,
