@@ -3,9 +3,15 @@ import { SignInFormData } from "./components/SignIn";
 import { SignupFormData } from "./components/Signup";
 import {HotelType} from '../../backend/src/models/hotel.model'
 
+
 const API_BASE_URL= import.meta.env.VITE_API_BASE_URL || ""
 
+/*
 
+-------------------------------Authenticaiton API CALLS--------------------------------------------
+----------------------------------------------------------------------------------------------------
+
+*/
 export const register= async (registerData:SignupFormData)=>{
     console.log(API_BASE_URL);
     const response= await fetch(`${API_BASE_URL}/api/users/register`,{
@@ -70,6 +76,14 @@ export const signOut= async()=>{
 }
 
 
+/*
+
+-------------------------------Hotel ADD and MANAGE API CALLS--------------------------------------------
+----------------------------------------------------------------------------------------------------
+
+*/
+
+
 export const addHotel = async(hotelFormData : FormData)=>{
     const response= await fetch(`${API_BASE_URL}/api/my-hotels/`, {
         credentials: "include",
@@ -94,3 +108,30 @@ export const fetchMyHotel = async (): Promise<HotelType[]> => {
   
     return response.json();
   };
+
+
+export const fetchHotelById= async (id : string): Promise<HotelType> =>{
+
+    const response= await fetch(`${API_BASE_URL}/api/my-hotels/${id}`, {
+        credentials: "include"
+    })
+
+    if(!response.ok){
+        throw new Error('Error while fetching the hotel!')
+    }
+
+    return response.json();
+}
+
+export const updateHotelById= async(hotelFormData : FormData)=>{
+    const response= await fetch( `${API_BASE_URL}/api/my-hotels/${hotelFormData.get("hotelId")}`, {
+        method: "PUT",
+        credentials: "include",
+        body: hotelFormData
+    })
+
+    if(!response.ok){
+        throw new Error('Error in updating the hotel')
+    }
+    return response.json();
+}

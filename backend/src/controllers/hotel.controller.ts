@@ -63,7 +63,67 @@ const getAllHotels= async(req: Request, res: Response)=>{
     }
 }
 
+const getHotelById= async(req: Request, res: Response)=>{
+
+    try {
+        const  id= req.params.id.toString();
+        const hotel= await Hotel.findOne({
+            _id: id,
+            userId: req.userId
+        })
+
+        if(!hotel){
+            res.status(404).json(
+                new ApiResponse(404, 'Hotel with given id not found!', {
+
+                })
+            )
+        }
+
+        // res.status(200).json(new ApiResponse(200, 'hotel fetched!', {hotel}));
+        res.status(200).json(hotel);
+    } catch (error) {
+        
+        res.status(500).json(
+            new ApiResponse(500, 'Internal server Error while fetching hotel!', {error})
+        )
+    }
+}
+
+const updateHotelById= async (req:Request, res: Response)=>{
+    try {
+        
+        const updateHotel:HotelType= req.body;
+        const hotel= await Hotel.findOneAndUpdate({
+            _id: req.params.hotelId,
+            userId: req.userId
+        }, updateHotel, {new: true});
+        if(!hotel){
+            return res.status(404).json(new ApiResponse(
+                404, 'Hotel Not Found!', {}
+            ))
+        }
+
+        const files= req.files as Express.Multer.File[];
+        const updatedUrls= await uploadOnCloudinary(files);
+        hotel.imageUrls= [
+            ...updatedUrls, 
+            ...(hotel.imageUrls || [])
+        ]
+
+        await hotel.save();
+        res.status(201).json(hotel);
+
+    } catch (error) {
+        res.status(500).json(
+            new ApiResponse(500, 'Server errro while updating the hotelById', {error})
+        );
+    }
+}
+
 export {
     addNewHotel,
-    getAllHotels
+    getAllHotels,
+    getHotelById,
+    updateHotelById
 }

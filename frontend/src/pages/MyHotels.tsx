@@ -9,7 +9,7 @@ const MyHotels= ()=>{
 
     const {data : hotelData}= useQuery("fetchMyHotel", apiClients.fetchMyHotel, {
         onError: ()=>{
-
+            
         },
        
     })

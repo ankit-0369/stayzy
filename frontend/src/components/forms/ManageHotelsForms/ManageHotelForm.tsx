@@ -5,6 +5,9 @@ import FacilitiesSection from "./FacilitiesSection";
 import GuestSection from "./GuestSection";
 import ImageSection from "./ImageSection";
 import { Button } from "../../Button";
+import { HotelType } from "../../../../../backend/src/models/hotel.model";
+import { useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 export type HotelFormData = {
     name: string;
@@ -24,15 +27,24 @@ export type HotelFormData = {
   type Props= {
     onSave: (hotelformData : FormData)=> void;
     isLoading: boolean;
+    hotel?: HotelType;
   }
 
-const ManageHotelForm= ({onSave, isLoading}:Props)=>{
+const ManageHotelForm= ({onSave, isLoading, hotel}:Props)=>{
     const formMethods= useForm<HotelFormData>()
-    const {handleSubmit}= formMethods
+    const {handleSubmit, reset}= formMethods
+
+    useEffect(()=>{
+        reset(hotel)
+    }, [reset, hotel])
     
+    const {hotelId}= useParams()
     const onSubmit= handleSubmit((formdataJson:HotelFormData)=>{
         console.log(formdataJson);
         const formData= new FormData()
+        if(hotelId){
+          formData.append("hotelId", hotelId)
+        }
         formData.append("name", formdataJson.name)
         formData.append("city", formdataJson.city)
         formData.append("country", formdataJson.country)

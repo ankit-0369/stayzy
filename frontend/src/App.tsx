@@ -12,6 +12,8 @@ import SignInPage from './pages/SignInPage'
 import { useAppContext } from './contexts/AppContext'
 import AddHotel from './pages/AddHotel'
 import MyHotels from './pages/MyHotels'
+import MyBookings from './pages/MyBookings'
+import EditHotel from './pages/EditHotel'
 
 
 function App() {
@@ -55,6 +57,20 @@ function App() {
                 path='/my-hotels'
                 element={<Layout>
                   <MyHotels />
+                </Layout>}
+
+              />
+               <Route
+                path='/edit-hotel/:hotelId'
+                element={<Layout>
+                  <EditHotel />
+                </Layout>}
+
+              />
+               <Route
+                path='/my-bookings'
+                element={<Layout>
+                  <MyBookings />
                 </Layout>}
 
               />

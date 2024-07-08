@@ -55,11 +55,11 @@ export function SignIn() {
   })
 
   return (
-    <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white dark:bg-black">
-      <h2 className="font-bold text-xl text-neutral-800 dark:text-neutral-200">
+    <div className="max-w-md w-full pt-10 mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white dark:bg-black">
+      <h2 className="font-bold text-center pt-5 text-xl text-neutral-800 dark:text-neutral-200">
         Welcome Back to StayZy 🤗
       </h2>
-      <p className="text-neutral-600 text-sm max-w-sm mt-2 dark:text-neutral-300">
+      <p className="text-neutral-600 text-center text-sm max-w-sm mt-2 dark:text-neutral-300">
         Sign in to book your stay and enjoy our services! 🏨✨
       </p>
 
