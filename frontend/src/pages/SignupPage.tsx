@@ -16,7 +16,7 @@ const SignupPage = () => {
    }, [isLoggedIn, navigate])
   return (
     <div className="w-screen overflow-hidden">
-     {isLoggedIn &&  <SignUp/>}
+     {!isLoggedIn &&  <SignUp/>}
     </div>
   )
 }
