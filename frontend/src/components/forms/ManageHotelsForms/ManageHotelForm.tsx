@@ -5,9 +5,9 @@ import FacilitiesSection from "./FacilitiesSection";
 import GuestSection from "./GuestSection";
 import ImageSection from "./ImageSection";
 import { Button } from "../../Button";
-import { HotelType } from "../../../../../backend/src/models/hotel.model";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { HotelType } from "../../../../../backend/src/shared/types";
 
 export type HotelFormData = {
     name: string;

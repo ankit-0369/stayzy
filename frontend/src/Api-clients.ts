@@ -1,7 +1,8 @@
 // import { HotelFormData } from "./components/forms/ManageHotelsForms/ManageHotelForm";
+import { HotelType } from "../../backend/src/shared/types";
 import { SignInFormData } from "./components/SignIn";
 import { SignupFormData } from "./components/Signup";
-import {HotelType} from '../../backend/src/models/hotel.model'
+
 
 
 const API_BASE_URL= import.meta.env.VITE_API_BASE_URL || ""

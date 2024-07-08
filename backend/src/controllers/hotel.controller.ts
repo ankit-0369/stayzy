@@ -1,7 +1,8 @@
 import { Request, Response } from "express"
-import Hotel, { HotelType } from "../models/hotel.model";
+import Hotel from "../models/hotel.model";
 import { ApiResponse } from "../utils/apiResponse";
 import { uploadOnCloudinary } from "../utils/cloudinary";
+import { HotelType } from "../shared/types";
 
 const addNewHotel= async(req: Request, res: Response)=>{
     
