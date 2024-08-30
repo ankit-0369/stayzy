@@ -14,6 +14,8 @@ import AddHotel from './pages/AddHotel'
 import MyHotels from './pages/MyHotels'
 import MyBookings from './pages/MyBookings'
 import EditHotel from './pages/EditHotel'
+import SearchPage from './pages/SearchPage'
+import NotFoundPage from './pages/NotFoundPage'
 
 
 function App() {
@@ -42,6 +44,12 @@ function App() {
             <SignInPage />
           </Layout>
         } />
+        
+        <Route path='/search' element={
+          <Layout>
+            <SearchPage />
+          </Layout>
+        } />
 
         {
           isLoggedIn && (
@@ -60,14 +68,14 @@ function App() {
                 </Layout>}
 
               />
-               <Route
+              <Route
                 path='/edit-hotel/:hotelId'
                 element={<Layout>
                   <EditHotel />
                 </Layout>}
 
               />
-               <Route
+              <Route
                 path='/my-bookings'
                 element={<Layout>
                   <MyBookings />
@@ -79,13 +87,10 @@ function App() {
         }
 
 
-        <Route path='/search' element={
-          <Layout>
-            <p>Search page</p>
-          </Layout>
-        } />
+
+        <Route path='*' element= {<NotFoundPage/>} />
       </Routes>
-      {/* <Route path='*'element= {<h1>OOPS! route not found</h1>} /> */}
+
     </Router>
   )
 }

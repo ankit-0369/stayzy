@@ -14,4 +14,20 @@ export type HotelType = {
     imageUrls: string[];
     lastUpdated: Date;
 
+    
+}
+
+export type HotelSearchResponse= {
+    data: HotelType[];
+        pagination: {
+            total: number;
+            page: number;
+            pages: number;
+        }
+}
+
+export type ApiResponseType<T> = {
+    statusCode: number;
+    message: string;
+    data: T;
 }

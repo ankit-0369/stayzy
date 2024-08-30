@@ -9,6 +9,7 @@ import {
 } from "framer-motion";
 
 import {Link} from "react-router-dom";
+import SearchBar from "../SearchBar";
 
 export const HeroParallax = ({
   products,
@@ -60,6 +61,7 @@ export const HeroParallax = ({
       className=" bg-black text-white h-[300vh] py-40 overflow-hidden  antialiased relative flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d]"
     >
       <Header />
+      
       <motion.div
         style={{
           rotateX,
@@ -111,7 +113,7 @@ export const Header = () => {
       <p className="max-w-3xl mt-4 text-lg md:text-xl">
         Explore and book hotels worldwide. Discover luxury, comfort, and convenience.
       </p>
-      <div className="flex items-center mt-8">
+      {/* <div className="flex items-center mt-8">
         <input
           type="text"
           placeholder="Enter a destination"
@@ -120,6 +122,11 @@ export const Header = () => {
         <button className="px-6 py-3 rounded-md bg-blue-500 text-white text-lg hover:bg-blue-600 focus:outline-none">
           Search
         </button>
+      </div> */}
+
+      <div className="flex items-center mt-8 text-black">
+        <SearchBar/>
+
       </div>
     </div>
   </div>

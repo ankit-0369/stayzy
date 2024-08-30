@@ -7,12 +7,20 @@ import * as apiClients from '../Api-clients'
 
 const MyHotels= ()=>{
 
-    const {data : hotelData}= useQuery("fetchMyHotel", apiClients.fetchMyHotel, {
+    const {data : hotelData, isLoading}= useQuery("fetchMyHotel", apiClients.fetchMyHotel, {
         onError: ()=>{
             
         },
        
     })
+
+    if(isLoading){
+      return (
+        <div className="w-screen h-screen flex justify-center items-center text-3xl text-black bg-slate-50">
+        Fetching Hotel data...
+    </div>
+      )
+    }
 
     if(!hotelData){
         return (
