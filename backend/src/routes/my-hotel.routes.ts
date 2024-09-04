@@ -1,5 +1,5 @@
 import express from "express";
-import { addNewHotel, getAllHotels, getHotelById, updateHotelById } from "../controllers/hotel.controller";
+import { addNewHotel, getAllHotels, getHotelById, updateHotelById } from "../controllers/my-hotel.controller";
 import { verifyToken } from "../middlewares/auth.middleware";
 import { addNewHotelValidation } from "../middlewares/validation.middleware";
 import upload from "../middlewares/multer.middleware";

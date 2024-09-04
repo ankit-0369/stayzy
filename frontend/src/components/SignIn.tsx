@@ -7,7 +7,7 @@ import {
   IconBrandGithub,
   IconBrandGoogle,
 } from "@tabler/icons-react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
 import * as apiClient from '../Api-clients'
@@ -22,6 +22,7 @@ export function SignIn() {
   const query= useQueryClient()
   const appContext= useAppContext()
   const navigate= useNavigate()
+  const location= useLocation()
   const mutation= useMutation(apiClient.signIn, {
 
     onSuccess: async() =>{
@@ -32,7 +33,7 @@ export function SignIn() {
         })
 
         await query.invalidateQueries("validateToken");
-        navigate("/");
+        navigate(location.state?.from?.pathname || "/");
     },
 
     onError: (error:Error) =>{

@@ -1,13 +1,14 @@
 
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 import { SignIn } from "../components/SignIn"
 import { useAppContext } from "../contexts/AppContext"
 import { useEffect } from "react"
 
 
 const SignInPage= ()=>{
-        const {isLoggedIn}= useAppContext()
-        const navigate= useNavigate()
+        const {isLoggedIn}= useAppContext();
+        const navigate= useNavigate();
+       
        useEffect(()=>{
         if(isLoggedIn){
          

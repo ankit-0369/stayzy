@@ -1,7 +1,6 @@
 // import { HotelFormData } from "./components/forms/ManageHotelsForms/ManageHotelForm";
 import { ApiResponseType, HotelSearchResponse,
      HotelType
-    
     } from "../../backend/src/shared/types";
 import { SignInFormData } from "./components/SignIn";
 import { SignupFormData } from "./components/Signup";
@@ -82,7 +81,7 @@ export const signOut= async()=>{
 
 /*
 
--------------------------------Hotel ADD and MANAGE API CALLS--------------------------------------------
+-------------------------------MY-Hotel ADD and MANAGE API CALLS--------------------------------------------
 ----------------------------------------------------------------------------------------------------
 
 */
@@ -192,40 +191,27 @@ export const searchHotel = async (
     return data.data;
 }
 
-// export const searchHotel= async(
-//     searchParams: SearchParams
-// ): Promise<ApiResponseType<HotelSearchResponse>>  =>{
+/*
 
-//     const queryParams= new URLSearchParams()
-//     queryParams.append("destination", searchParams.destination || "");
-//     queryParams.append("checkIn", searchParams.checkIn || "");
-//     queryParams.append("checkOut", searchParams.checkOut|| "");
-//     queryParams.append("adultCount", searchParams.adultCount || "");
-//     queryParams.append("childCount", searchParams.childCount || "");
-//     queryParams.append("page", searchParams.page || "");
-//     queryParams.append("maxPrice", searchParams.maxPrice || "");
-//     queryParams.append("sortOption", searchParams.sortOption || "");
+    -------------------------------------READ HOTEL API------------------------------------------------
+    -----------------------------------------------------------------------------------------------
 
+*/
 
-//     searchParams.facilities?.map((facility) => (
-//         queryParams.append("facilities", facility)
-//     ));
+export const fetchHotelDetailById= async (hotelId: string): Promise<HotelType>=>{
 
-//     searchParams.types?.map(type => 
-//         queryParams.append("types", type)
-//     );
+    console.log("called", hotelId);
+    const response= await fetch(`${API_BASE_URL}/api/hotel/${hotelId}`)
+    const data=await response.json();
+  
+    if(!response.ok){
+        throw new Error('Error in hotel detail fetching');
 
-//     searchParams.stars?.map(star => 
-//         queryParams.append("stars", star)
-//     )
+    }
+    console.log("data :: ",data.data.hotel)
+    return data.data.hotel;
 
-//     const response= await fetch(`${API_BASE_URL}/api/hotel/search`)
+}
 
 
-//     if(!response.ok)
-//         throw new Error('Error while searching hotels');
-//     console.log("No error while fetching hotels")
-//     console.log(response.json());
-//     return response.json();
 
-// }

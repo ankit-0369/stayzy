@@ -16,6 +16,7 @@ import MyBookings from './pages/MyBookings'
 import EditHotel from './pages/EditHotel'
 import SearchPage from './pages/SearchPage'
 import NotFoundPage from './pages/NotFoundPage'
+import HotelDetails from './pages/HotelDetails'
 
 
 function App() {
@@ -44,10 +45,16 @@ function App() {
             <SignInPage />
           </Layout>
         } />
-        
+
         <Route path='/search' element={
           <Layout>
             <SearchPage />
+          </Layout>
+        } />
+
+        <Route path='/detail/:id' element={
+          <Layout>
+            <HotelDetails />
           </Layout>
         } />
 
@@ -88,7 +95,7 @@ function App() {
 
 
 
-        <Route path='*' element= {<NotFoundPage/>} />
+        <Route path='*' element={<NotFoundPage />} />
       </Routes>
 
     </Router>
